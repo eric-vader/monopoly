@@ -26,6 +26,7 @@ import { EchartsMultipleXaxisComponent } from './echarts/echarts-multiple-xaxis.
 import { EchartsAreaStackComponent } from './echarts/echarts-area-stack.component';
 import { EchartsBarAnimationComponent } from './echarts/echarts-bar-animation.component';
 import { EchartsRadarComponent } from './echarts/echarts-radar.component';
+import { EchartsPieComponent } from './echarts/echarts-pie.component';
 
 const components = [
   ChartjsBarComponent,
@@ -46,6 +47,7 @@ const components = [
   EchartsAreaStackComponent,
   EchartsBarAnimationComponent,
   EchartsRadarComponent,
+  EchartsPieComponent,
 ];
 
 @NgModule({
