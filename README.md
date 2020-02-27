@@ -4,4 +4,4 @@ Instructions:
 
 npm install - install node_modules after clone the project at the first time
 
-npm start - run the application, go to the http://localhost:4200
+npm start - run the application, visit http://localhost:4200
