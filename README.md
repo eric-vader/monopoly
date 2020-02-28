@@ -8,4 +8,4 @@ Instructions:
 
 Follow [https://github.com/angular/angular-cli/wiki/stories-github-pages](https://github.com/angular/angular-cli/wiki/stories-github-pages) for deployment
 
-[Product Link](http://eric-han.com/monopoly/pages/pages/charts/d3)
+[Product Link](http://eric-han.com/monopoly/pages)
