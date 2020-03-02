@@ -1,14 +1,5 @@
 {
-  "name": "ngx-admin-bundle",
-  "version": "3.2.1",
-  "license": "LICENCE",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/akveo/ngx-admin.git"
-  },
-  "bugs": {
-    "url": "https://github.com/akveo/ngx-admin-bundle-support/issues"
-  },
+  "name": "ngx-admin",
   "scripts": {
     "ng": "ng",
     "conventional-changelog": "conventional-changelog",

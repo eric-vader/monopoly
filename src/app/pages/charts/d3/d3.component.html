@@ -1,7 +1,21 @@
- 
-
-<div class="row">
-  <div class="col-lg-6">
+ <div class="row">
+  <div class="col-lg-12">
+    <nb-card>
+      <nb-card-header>Assets</nb-card-header>
+      <nb-card-body>
+        <ngx-d3-line [multi]="assets" [xAxisLabel]="xAsset" [yAxisLabel]="yAsset"></ngx-d3-line>
+      </nb-card-body>
+    </nb-card>
+  </div>
+  <div class="col-lg-12">
+    <nb-card>
+      <nb-card-header>Net Cost</nb-card-header>
+      <nb-card-body>
+        <ngx-d3-line [multi]="multi" [xAxisLabel]="xNet" [yAxisLabel]="yNet"></ngx-d3-line>
+      </nb-card-body>
+    </nb-card>
+  </div>
+  <div class="col-lg-12">
     <nb-card>
       <nb-card-header>Pie</nb-card-header>
       <nb-card-body>
@@ -9,7 +23,7 @@
       </nb-card-body>
     </nb-card>
   </div>
-  <div class="col-lg-6">
+  <div class="col-lg-12">
     <nb-card>
       <nb-card-header>Bar</nb-card-header>
       <nb-card-body>
@@ -17,15 +31,7 @@
       </nb-card-body>
     </nb-card>
   </div>
-  <div class="col-lg-6">
-    <nb-card>
-      <nb-card-header>Line</nb-card-header>
-      <nb-card-body>
-        <ngx-d3-line></ngx-d3-line>
-      </nb-card-body>
-    </nb-card>
-  </div>
-  <div class="col-lg-6">
+  <div class="col-lg-12">
     <nb-card>
       <nb-card-header>Advanced Pie</nb-card-header>
       <nb-card-body>

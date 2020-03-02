@@ -1,5 +1,5 @@
 
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, Input } from '@angular/core';
 import { NbThemeService } from '@nebular/theme';
 
 @Component({
@@ -19,54 +19,15 @@ import { NbThemeService } from '@nebular/theme';
   `,
 })
 export class D3LineComponent implements OnDestroy {
-  multi = [
-    {
-      name: 'Germany',
-      series: [
-        {
-          name: '2010',
-          value: 7300,
-        },
-        {
-          name: '2011',
-          value: 8940,
-        },
-      ],
-    },
-    {
-      name: 'USA',
-      series: [
-        {
-          name: '2010',
-          value: 7870,
-        },
-        {
-          name: '2011',
-          value: 8270,
-        },
-      ],
-    },
-    {
-      name: 'France',
-      series: [
-        {
-          name: '2010',
-          value: 5002,
-        },
-        {
-          name: '2011',
-          value: 5800,
-        },
-      ],
-    },
-  ];
+  @Input() multi: any;
+  @Input() xAxisLabel: String;
+  @Input() yAxisLabel: String;
+
   showLegend = true;
   showXAxis = true;
   showYAxis = true;
   showXAxisLabel = true;
-  xAxisLabel = 'Country';
   showYAxisLabel = true;
-  yAxisLabel = 'Population';
   colorScheme: any;
   themeSubscription: any;
 
@@ -74,7 +35,7 @@ export class D3LineComponent implements OnDestroy {
     this.themeSubscription = this.theme.getJsTheme().subscribe(config => {
       const colors: any = config.variables;
       this.colorScheme = {
-        domain: [colors.primaryLight, colors.infoLight, colors.successLight, colors.warningLight, colors.dangerLight],
+        domain: [colors.successLight, colors.dangerLight, colors.warningLight, colors.infoLight, colors.primaryLight],
       };
     });
   }
