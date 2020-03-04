@@ -1,4 +1,3 @@
-
 import { NgModule } from '@angular/core';
 import { NgxEchartsModule } from 'ngx-echarts';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
@@ -27,6 +26,9 @@ import { EchartsAreaStackComponent } from './echarts/echarts-area-stack.componen
 import { EchartsBarAnimationComponent } from './echarts/echarts-bar-animation.component';
 import { EchartsRadarComponent } from './echarts/echarts-radar.component';
 import { EchartsPieComponent } from './echarts/echarts-pie.component';
+import { WjChartModule } from '@grapecity/wijmo.angular2.chart';
+import { WjChartAnalyticsModule } from '@grapecity/wijmo.angular2.chart.analytics';
+
 
 const components = [
   ChartjsBarComponent,
@@ -52,6 +54,8 @@ const components = [
 
 @NgModule({
   imports: [
+    WjChartModule, 
+    WjChartAnalyticsModule,
     ThemeModule,
     ChartsRoutingModule,
     NgxEchartsModule,
@@ -60,5 +64,6 @@ const components = [
     NbCardModule,
   ],
   declarations: [...routedComponents, ...components],
+
 })
 export class ChartsModule {}
