@@ -1,6 +1,6 @@
 
 import { Component } from '@angular/core';
-import * as AssetsJson from '../../../../assets/data/assets.json';
+import AssetsJson from '../../../../assets/data/assets.json';
 
 
 
@@ -14,14 +14,18 @@ export class D3Component {
   yAsset= 'Earnings(S$)';
   xNet = 'Total Number of roll';
   yNet = 'Total Revenue/Cost';
-  assets: any = AssetsJson;
+  assets: any;
+  
 
   constructor(){
     console.log(this.assets);
+    this.assets = [];
   }
 
-  click(){
-
+  run(){
+    console.log("hello");
+    this.assets = AssetsJson;
+    
   }
 
     multi = [

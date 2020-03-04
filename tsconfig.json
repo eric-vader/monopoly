@@ -2,7 +2,6 @@
   "compileOnSave": false,
   "compilerOptions": {
     "importHelpers": true,
-    "resolveJsonModule": true,
     "module": "esnext",
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
@@ -19,6 +18,8 @@
       "dom"
     ],
     "plugins": [
-    ]
+    ],
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
   }
 }

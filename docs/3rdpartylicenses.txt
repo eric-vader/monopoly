@@ -79,6 +79,24 @@ Awesome, nor vice versa. **Please do not use brand logos for any purpose except
 to represent the company, product, or service to which they refer.**
 
 
+@grapecity/wijmo
+Commercial
+
+@grapecity/wijmo.angular2.chart
+Commercial
+
+@grapecity/wijmo.angular2.chart.analytics
+Commercial
+
+@grapecity/wijmo.angular2.directivebase
+Commercial
+
+@grapecity/wijmo.chart
+Commercial
+
+@grapecity/wijmo.chart.analytics
+Commercial
+
 @nebular/eva-icons
 MIT
 
