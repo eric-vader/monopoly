@@ -70,17 +70,31 @@ class MonopolyBoard(object):
         self.n_turns = n_turns
         self.n_procs = n_procs
         self.random_state = np.random.RandomState(random_seed)
+    def collect_count_landings(self, count_landings):
+        print("Add")
+        self.total_count_landings += count_landings
     def run(self):
+        self.total_count_landings = np.array([ 0 ] * N_MONOPOLY_LOCATIONS)
         pool = Pool(self.n_procs)
         round_seeds = self.random_state.random_integers(0, 2**32-1, size=self.n_rounds)
-        count_landings = np.sum(pool.map(self.run_round, round_seeds), axis=0)
-        print(count_landings)
-        p_landings = count_landings / (self.n_rounds * self.n_turns) * 100
+        
+        semas = []
+        for round_seed in round_seeds:
+            s = pool.apply_async(self.run_round, (round_seed,), callback=self.collect_count_landings)
+            semas.append(s)
+
+        # Adding on demand to be faster, we know that this is atomic so not a problem
+        for s in semas:
+            s.wait()
+
+        print(self.total_count_landings)
+        assert(np.sum(self.total_count_landings) == (self.n_rounds * self.n_turns))
+        p_landings = self.total_count_landings / (self.n_rounds * self.n_turns) * 100
         print(p_landings)
     def run_round(self, random_seed=0):
         rs = np.random.RandomState(random_seed)
         
-        count_landings = np.array([ 1 ] * N_MONOPOLY_LOCATIONS)
+        count_landings = np.array([ 0 ] * N_MONOPOLY_LOCATIONS)
         doubles = 0
         position = 0
 
@@ -131,7 +145,8 @@ class MonopolyBoard(object):
                         
                 if position == 30: # Go to jail
                     position = 10
-                    
-            count_landings[position] += 1
 
+            count_landings[position] += 1
         return count_landings
+        
+
