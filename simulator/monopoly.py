@@ -71,7 +71,6 @@ class MonopolyBoard(object):
         self.n_procs = n_procs
         self.random_state = np.random.RandomState(random_seed)
     def collect_count_landings(self, count_landings):
-        print("Add")
         self.total_count_landings += count_landings
     def run(self):
         self.total_count_landings = np.array([ 0 ] * N_MONOPOLY_LOCATIONS)
