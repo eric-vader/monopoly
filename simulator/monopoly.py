@@ -96,6 +96,9 @@ class MonopolyBoard(object):
         # Adding on demand to be faster, we know that this is atomic so not a problem
         for s in semas:
             s.wait()
+        
+        #self.total_count_landings = list(map(sum, zip(*pool.map(self.run_round, n_subrounds))))
+        #self.total_count_landings = [ sum(c) for c in zip(*pool.map(self.run_round, n_subrounds)) ]
 
         assert(sum(self.total_count_landings) == (self.n_rounds * self.n_turns))
         p_landings = [ l / (self.n_rounds * self.n_turns) * 100 for l in self.total_count_landings ]
