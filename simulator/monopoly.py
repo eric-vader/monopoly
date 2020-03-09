@@ -1,16 +1,26 @@
 from multiprocessing.pool import Pool
 import multiprocessing
-import numpy as np
+import random
+from random import choices
+import operator
 
 CHANCE_LOCATIONS = set([7,22,33])
 CHEST_LOCATIONS = set([2,17])
+UTILITY_LOCATIONS = set([12,28])
+RAIL_LOCATIONS = set([5,15,25,35])
 
-UTILITY_LOCATIONS = np.array([12,28])
-RAIL_LOCATIONS = np.array([5,15,25,35])
+'''
+def go_to_nearest(LOCATION, position):
+    vals = list(map(operator.abs, [ l-position for l in LOCATION ]))
+    closest_i = min(range(len(vals)), key=vals.__getitem__)
+    return LOCATION[closest_i]
+'''
 
 def go_to_nearest(LOCATION, position):
-    closest_i = np.abs(LOCATION - position).argmin()
-    return LOCATION[closest_i]
+    while position not in LOCATION:
+        position = (position + 1)%40
+    return position
+
 
 N_MONOPOLY_LOCATIONS = 40
 CHEST = [0,40,40,40,40,10,40,40,40,40,40,40,40,40,40,40]
@@ -55,8 +65,8 @@ class Utility(Property):
 # Fast Dice roll
 population = [0,3,4,5,6,7,8,9,10,11]
 weights = [6.0/36, 2.0/36, 2.0/36, 4.0/36, 4.0/36, 6.0/36, 4.0/36, 4.0/36, 2.0/36, 2.0/36]
-def roll_dice(rs):
-    return rs.choice(population, p=weights)
+def roll_dice(n):
+    return choices(population, weights, k=n)
 
 '''
 def roll_dice_1(self, n):
@@ -69,83 +79,83 @@ class MonopolyBoard(object):
         self.n_rounds = n_rounds
         self.n_turns = n_turns
         self.n_procs = n_procs
-        self.random_state = np.random.RandomState(random_seed)
+        random.seed(random_seed)
     def collect_count_landings(self, count_landings):
-        self.total_count_landings += count_landings
+        self.total_count_landings = list(map(operator.add, self.total_count_landings, count_landings))
+        #self.total_count_landings = [ a+b for a,b in zip(self.total_count_landings, count_landings) ]
     def run(self):
-        self.total_count_landings = np.array([ 0 ] * N_MONOPOLY_LOCATIONS)
+        self.total_count_landings = [ 0 ] * N_MONOPOLY_LOCATIONS
         pool = Pool(self.n_procs)
-        round_seeds = self.random_state.random_integers(0, 2**32-1, size=self.n_rounds)
-        
-        semas = []
-        for round_seed in round_seeds:
-            s = pool.apply_async(self.run_round, (round_seed,), callback=self.collect_count_landings)
-            semas.append(s)
+
+        q, r = divmod(self.n_rounds, self.n_procs)
+        n_subrounds = [ q ] * self.n_procs
+        n_subrounds[-1] += r
+
+        semas = [ pool.apply_async(self.run_round, (n_subround,), callback=self.collect_count_landings) for n_subround in n_subrounds ]
 
         # Adding on demand to be faster, we know that this is atomic so not a problem
         for s in semas:
             s.wait()
 
-        print(self.total_count_landings)
-        assert(np.sum(self.total_count_landings) == (self.n_rounds * self.n_turns))
-        p_landings = self.total_count_landings / (self.n_rounds * self.n_turns) * 100
+        assert(sum(self.total_count_landings) == (self.n_rounds * self.n_turns))
+        p_landings = [ l / (self.n_rounds * self.n_turns) * 100 for l in self.total_count_landings ]
         print(p_landings)
-    def run_round(self, random_seed=0):
-        rs = np.random.RandomState(random_seed)
-        
-        count_landings = np.array([ 0 ] * N_MONOPOLY_LOCATIONS)
-        doubles = 0
-        position = 0
+    def run_round(self, n_subround=1):
+        count_landings = [ 0 ] * N_MONOPOLY_LOCATIONS
 
-        chest_i = 0
-        chance_i = 0
+        for r in range(n_subround):
+            doubles = 0
+            position = 0
 
-        chest = np.array(CHEST, copy=True)
-        chance = np.array(CHANCE, copy=True)
+            chest_i = 0
+            chance_i = 0
 
-        rs.shuffle(chest)
-        rs.shuffle(chance)
-        
-        for i in range(self.n_turns):
-            dice_roll_result = roll_dice(rs)
-            if dice_roll_result == 0:
-                doubles += 1
-            else:
-                doubles = 0
-                
-            if doubles >= 3:
-                position = 10
-            else:
-                position = (position + dice_roll_result)%40
-                
-                if position in CHANCE_LOCATIONS:  # Chance
-                    chance_card = chance[chance_i]
-                    chance_i += 1
-                    if chance_i >= len(chance):
-                        rs.shuffle(chance)
-                        chance_i = 0
-                    if chance_card != 40:
-                        if chance_card == CHANCE_U:
-                            position = go_to_nearest(UTILITY_LOCATIONS, position)
-                        elif chance_card == CHANCE_R:
-                            position = go_to_nearest(RAIL_LOCATIONS, position)
-                        elif chance_card == CHANCE_B:
-                            position -= - 3
-                        else:
-                            position = chance_card    
+            chest = CHEST.copy()
+            chance = CHANCE.copy()
 
-                elif position in CHEST_LOCATIONS:  # Community Chest
-                    chest_card = chest[chest_i]
-                    if chest_i >= len(chest):
-                        rs.shuffle(chest)
-                        chest_i = 0
-                    if chest_card != 40:
-                        position = chest_card
-                        
-                if position == 30: # Go to jail
+            random.shuffle(chest)
+            random.shuffle(chance)
+            
+            for dice_roll_result in roll_dice(self.n_turns):
+
+                if dice_roll_result == 0:
+                    doubles += 1
+                else:
+                    doubles = 0
+                    
+                if doubles >= 3:
                     position = 10
+                else:
+                    position = (position + dice_roll_result)%40
+                    
+                    if position in CHANCE_LOCATIONS:  # Chance
+                        chance_card = chance[chance_i]
+                        chance_i += 1
+                        if chance_i >= len(chance):
+                            random.shuffle(chance)
+                            chance_i = 0
+                        if chance_card != 40:
+                            if chance_card == CHANCE_U:
+                                position = go_to_nearest(UTILITY_LOCATIONS, position)
+                            elif chance_card == CHANCE_R:
+                                position = go_to_nearest(RAIL_LOCATIONS, position)
+                            elif chance_card == CHANCE_B:
+                                position -= - 3
+                            else:
+                                position = chance_card    
 
-            count_landings[position] += 1
-        return count_landings
+                    elif position in CHEST_LOCATIONS:  # Community Chest
+                        chest_card = chest[chest_i]
+                        if chest_i >= len(chest):
+                            random.shuffle(chest)
+                            chest_i = 0
+                        if chest_card != 40:
+                            position = chest_card
+                            
+                    if position == 30: # Go to jail
+                        position = 10
+
+                count_landings[position] += 1
         
-
+        return count_landings
+    
