@@ -89,7 +89,7 @@ class MonopolyBoard(object):
 
         q, r = divmod(self.n_rounds, self.n_procs)
         n_subrounds = [ q ] * self.n_procs
-        n_subrounds[-1] += r
+        n_subrounds[0] += r
 
         semas = [ pool.apply_async(self.run_round, (n_subround,), callback=self.collect_count_landings) for n_subround in n_subrounds ]
 
