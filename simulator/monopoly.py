@@ -105,16 +105,17 @@ class MonopolyBoard(object):
         print(p_landings)
     def run_round(self, n_subround=1):
         count_landings = [ 0 ] * N_MONOPOLY_LOCATIONS
+            
+        chest = CHEST.copy()
+        chance = CHANCE.copy()
 
         for r in range(n_subround):
+            
             doubles = 0
             position = 0
 
             chest_i = 0
             chance_i = 0
-
-            chest = CHEST.copy()
-            chance = CHANCE.copy()
 
             random.shuffle(chest)
             random.shuffle(chance)
