@@ -7,8 +7,19 @@ def generate_locations(countries = ['uk', 'usa', 'singapore']):
         with open(f'locations-{c}.json', 'w') as f:
             f.write(json.dumps(s, cls=monopoly.MonopolyEncoder, indent=2))
 
-def generate_probabilities():
-    m_board = monopoly.Simulation(10**3, 10**6, random_seed=1)
-    m_board.run()
+def generate_probabilities(n_rounds, n_turns, random_seed=1):
+    m = monopoly.Simulation(n_rounds, n_turns, random_seed)
+    m.run()
+    
+    sr = monopoly.SimulationResult(n_rounds=m.n_rounds,
+        n_turns_hist = {m.n_turns: m.n_rounds},
+        random_seed = random_seed)
 
-generate_probabilities()
+    for i in range(40):
+        sr.add_metric(i, 'n_landings', m.total_count_landings[i])
+        sr.add_metric(i, 'p_landings', m.p_landings[i])
+
+    with open(f'probabilities-{random_seed}.json', 'w') as f:
+        f.write(json.dumps(sr, cls=monopoly.MonopolyEncoder, indent=2))
+
+generate_probabilities(10**4, 10**6)

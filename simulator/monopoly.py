@@ -152,8 +152,7 @@ class Simulation(object):
         #self.total_count_landings = [ sum(c) for c in zip(*pool.map(self.run_round, n_subrounds)) ]
 
         assert(sum(self.total_count_landings) == (self.n_rounds * self.n_turns))
-        p_landings = [ l / (self.n_rounds * self.n_turns) * 100 for l in self.total_count_landings ]
-        print(p_landings)
+        self.p_landings = [ l / (self.n_rounds * self.n_turns) * 100 for l in self.total_count_landings ]
     def run_round(self, n_subround=1):
         count_landings = [ 0 ] * N_MONOPOLY_LOCATIONS
             
