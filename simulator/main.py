@@ -19,5 +19,5 @@ with open(os.path.join("data", "singapore.csv")) as csv_file:
             del row['Type']
             m_locations.append(monopoly.Location(**row))
 
-m_board = monopoly.MonopolyBoard(10**4, 10**7)
+m_board = monopoly.MonopolyBoard(10**3, 10**6)
 m_board.run()

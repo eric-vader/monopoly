@@ -65,8 +65,17 @@ class Utility(Property):
 # Fast Dice roll
 population = [0,3,4,5,6,7,8,9,10,11]
 weights = [6.0/36, 2.0/36, 2.0/36, 4.0/36, 4.0/36, 6.0/36, 4.0/36, 4.0/36, 2.0/36, 2.0/36]
+
 def roll_dice(n):
     return choices(population, weights, k=n)
+
+'''
+from itertools import accumulate
+cum_weights = list(accumulate(weights))
+import bisect
+def roll_dice(n):
+    return [ population[bisect.bisect_left(cum_weights, random.random())] for i in range(n) ]
+'''
 
 '''
 def roll_dice_1(self, n):
