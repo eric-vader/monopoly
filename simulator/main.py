@@ -22,4 +22,3 @@ def generate_probabilities(n_rounds, n_turns, random_seed=1):
     with open(f'probabilities-{random_seed}.json', 'w') as f:
         f.write(json.dumps(sr, cls=monopoly.MonopolyEncoder, indent=2))
 
-generate_probabilities(10**4, 10**6)
