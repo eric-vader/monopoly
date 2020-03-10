@@ -4,6 +4,17 @@ import random
 from random import choices
 import operator
 
+import json
+class MonopolyEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, Location): 
+            return obj.__dict__
+        elif isinstance(obj, Monopoly): 
+            return obj.__dict__
+        elif isinstance(obj, SimulationResult): 
+            return obj.__dict__
+        return json.JSONEncoder.default(self, obj)
+
 CHANCE_LOCATIONS = set([7,22,33])
 CHEST_LOCATIONS = set([2,17])
 UTILITY_LOCATIONS = set([12,28])
@@ -35,32 +46,33 @@ CHANCE_B = -3
 CHANCE = [0,24,11,CHANCE_U,CHANCE_R,40,40,CHANCE_B,10,40,40,5,39,40,40,40]
 
 class Location(object):
-    def __init__(self, ID, Name):
-        self.ID = ID
+    def __init__(self, ID, Name, Type):
+        self.ID = int(ID)
         self.Name = Name
+        self.Type = Type
 
 class Property(Location):
     def __init__(self, Price, Mortgage, **kwargs):
         super(Property, self).__init__(**kwargs)
-        self.Price = Price
-        self.Mortage = Mortgage
+        self.Price = int(Price)
+        self.Mortage = int(Mortgage)
 
 class Street(Property):
     def __init__(self, Color, House_Price, Rent, Rent_1, Rent_2, Rent_3, Rent_4, Rent_5, **kwargs):
         super(Street, self).__init__(**kwargs)
         self.Color = Color
-        self.House_Price = House_Price
-        self.Rent = [ Rent, Rent_1, Rent_2, Rent_3, Rent_4, Rent_5 ]
+        self.House_Price = int(House_Price)
+        self.Rent = list(map(int, [ Rent, Rent_1, Rent_2, Rent_3, Rent_4, Rent_5 ]))
 
 class Railroad(Property):
     def __init__(self, Rent_1, Rent_2, Rent_3, Rent_4, **kwargs):
         super(Railroad, self).__init__(**kwargs)
-        self.Rent = [ Rent_1, Rent_2, Rent_3, Rent_4 ]
+        self.Rent = list(map(int, [ Rent_1, Rent_2, Rent_3, Rent_4 ]))
         
 class Utility(Property):
     def __init__(self, Rent_1, Rent_2, **kwargs):
         super(Utility, self).__init__(**kwargs)
-        self.Multiplier = [Rent_1[1:], Rent_2[1:]]
+        self.Multiplier = list(map(int, [Rent_1[1:], Rent_2[1:]]))
 
 # Fast Dice roll
 population = [0,3,4,5,6,7,8,9,10,11]
@@ -82,12 +94,42 @@ def roll_dice_1(self, n):
     r = [(random.randint(1, 6), random.randint(1, 6)) for _ in range(n)]
     return [ 0 if x==y else x+y for x,y in r ]
 '''
+import csv
+import os
+import importlib
+import json
+class Monopoly(object):
+    def __init__(self, country):
+        monopoly_module = importlib.import_module('monopoly')
+        self.country = country
+        self.locations = list()
+        with open(os.path.join("data", "{}.csv".format(country))) as csv_file:
+            d_reader = csv.DictReader(csv_file)
+            for row in d_reader:
+                # Clean out all empty values with their keys
+                row = { k:row[k] for k in row if row[k] }
+                try:
+                    class_ = getattr(monopoly_module, row['Type'])
+                    m_obj = class_(**row)
+                except AttributeError as e:
+                    m_obj = Location(**row)
+                self.locations.append(m_obj)
 
-class MonopolyBoard(object):
+class SimulationResult(object):
+    def __init__(self, n_rounds, n_turns_hist, random_seed):
+        self.n_rounds = n_rounds
+        self.n_turns_hist = n_turns_hist
+        self.random_seed = random_seed
+        self.locations = [ {"ID": i} for i in range(40) ]
+    def add_metric(self, ID, metric_name, metric):
+        self.locations[ID][metric_name] = metric
+
+class Simulation(object):
     def __init__(self, n_rounds, n_turns, random_seed=None, n_procs=multiprocessing.cpu_count()):
         self.n_rounds = n_rounds
         self.n_turns = n_turns
         self.n_procs = n_procs
+        self.random_seed = random_seed
         random.seed(random_seed)
     def collect_count_landings(self, count_landings):
         self.total_count_landings = list(map(operator.add, self.total_count_landings, count_landings))

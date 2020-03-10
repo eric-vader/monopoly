@@ -1,23 +1,14 @@
-import csv
-import os
-import importlib
 import monopoly
+import json
 
-monopoly_module = importlib.import_module('monopoly')
+def generate_locations(countries = ['uk', 'usa', 'singapore']):
+    for c in countries:
+        s = monopoly.Monopoly(c)
+        with open(f'locations-{c}.json', 'w') as f:
+            f.write(json.dumps(s, cls=monopoly.MonopolyEncoder, indent=2))
 
-m_locations = []
-with open(os.path.join("data", "singapore.csv")) as csv_file:
-    d_reader = csv.DictReader(csv_file)
-    for row in d_reader:
-        # Clean out all empty values with their keys
-        row = { k:row[k] for k in row if row[k] }
-        try:
-            class_ = getattr(monopoly_module, row['Type'])
-            del row['Type']
-            m_locations.append(class_(**row))
-        except AttributeError as e:
-            del row['Type']
-            m_locations.append(monopoly.Location(**row))
+def generate_probabilities():
+    m_board = monopoly.Simulation(10**3, 10**6, random_seed=1)
+    m_board.run()
 
-m_board = monopoly.MonopolyBoard(10**3, 10**6)
-m_board.run()
+generate_probabilities()
