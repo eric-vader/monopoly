@@ -4,8 +4,8 @@ import { PagesComponent } from './pages.component';
 import { PagesRoutingModule } from './pages-routing.module';
 import { ThemeModule } from '../@theme/theme.module';
 import { MiscellaneousModule } from './miscellaneous/miscellaneous.module';
-import { PagesMenu } from './pages-menu';
 import { NbMenuModule } from '@nebular/theme';
+import { ChartsModule } from './charts/charts.module';
 
 const PAGES_COMPONENTS = [
   PagesComponent,
@@ -17,13 +17,12 @@ const PAGES_COMPONENTS = [
     ThemeModule,
     NbMenuModule,
     MiscellaneousModule,
+    ChartsModule,
   ],
   declarations: [
     ...PAGES_COMPONENTS,
   ],
-  providers: [
-    PagesMenu,
-  ],
+  providers: [ ],
 })
 export class PagesModule {
 }

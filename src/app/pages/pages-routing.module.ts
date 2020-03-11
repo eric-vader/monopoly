@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { PagesComponent } from './pages.component';
 import { NotFoundComponent } from './miscellaneous/not-found/not-found.component';
+import { ChartsComponent } from './charts/charts.component';
 
 const routes: Routes = [{
   path: '',
@@ -10,8 +11,7 @@ const routes: Routes = [{
   children: [
     {
       path: 'charts',
-      loadChildren: () => import('./charts/charts.module')
-        .then(m => m.ChartsModule),
+      component: ChartsComponent,
     },
     {
       path: 'miscellaneous',
@@ -20,7 +20,7 @@ const routes: Routes = [{
     },
     {
       path: '',
-      redirectTo: 'charts/d3',
+      redirectTo: 'charts',
       pathMatch: 'full',
     },
     {
