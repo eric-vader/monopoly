@@ -1,0 +1,41 @@
+ID,Name,Color,Price,House_Price,Rent,Rent_1,Rent_2,Rent_3,Rent_4,Rent_5,Mortgage,Type
+0,Go,,,,,,,,,,,Go
+1,Mediterranean Avenue,Brown (Dark Purple),60,50,2,10,30,90,160,250,30,Street
+2,Community Chest,,,,,,,,,,,Community Chest
+3,Baltic Avenue,Brown (Dark Purple),60,50,4,20,60,180,320,450,30,Street
+4,Income Tax,,,,,,,,,,,Tax
+5,Reading Railroad,,200,,,25,50,100,200,,100,Railroad
+6,Oriental Avenue,Light Blue,100,50,6,30,90,270,400,550,50,Street
+7,Chance,,,,,,,,,,,Chance
+8,Vermont Avenue,Light Blue,100,50,6,30,90,270,400,550,50,Street
+9,Connecticut Avenue,Light Blue,120,50,8,40,100,300,450,600,60,Street
+10,Jail,,,,,,,,,,,Jail
+11,St. Charles Place,Pink,140,100,10,50,150,450,625,750,70,Street
+12,Electric Company,,150,,,x4,x10,,,,75,Utility
+13,States Avenue,Pink,140,100,10,50,150,450,625,750,70,Street
+14,Virginia Avenue,Pink,160,100,12,60,180,500,700,900,80,Street
+15,Pennsylvania Railroad,,200,,,25,50,100,200,,100,Railroad
+16,St. James Place,Orange,180,100,14,70,200,550,750,950,90,Street
+17,Community Chest,,,,,,,,,,,Community Chest
+18,Tennessee Avenue,Orange,180,100,14,70,200,550,750,950,90,Street
+19,New York Avenue,Orange,200,100,16,80,220,600,800,1000,100,Street
+20,Free Parking,,,,,,,,,,,Free Parking
+21,Kentucky Avenue,Red,220,150,18,90,250,700,875,1050,110,Street
+22,Chance,,,,,,,,,,,Chance
+23,Indiana Avenue,Red,220,150,18,90,250,700,875,1050,110,Street
+24,Illinois Avenue,Red,240,150,20,100,300,750,925,1100,120,Street
+25,B. & O. Railroad,,200,,,25,50,100,200,,100,Railroad
+26,Atlantic Avenue,Yellow,260,150,22,110,330,800,975,1150,130,Street
+27,Ventnor Avenue,Yellow,260,150,22,110,330,800,975,1150,130,Street
+28,Water Works,,150,,,x4,x10,,,,75,Utility
+29,Marvin Gardens,Yellow,280,150,24,120,360,850,1025,1200,140,Street
+30,Go to Jail,,,,,,,,,,,Go to Jail
+31,Pacific Avenue,Green,300,200,26,130,390,900,1100,1275,150,Street
+32,North Carolina Avenue,Green,300,200,26,130,390,900,1100,1275,150,Street
+33,Community Chest,,,,,,,,,,,Community Chest
+34,Pennsylvania Avenue,Green,320,200,28,150,450,1000,1200,1400,160,Street
+35,Short Line,,200,,,25,50,100,200,,100,Railroad
+36,Chance,,,,,,,,,,,Chance
+37,Park Place,Dark Blue,350,200,35,175,500,1100,1300,1500,175,Street
+38,Luxury Tax,,,,,,,,,,,Tax
+39,Boardwalk,Dark Blue,400,200,50,200,600,1400,1700,2000,200,Street
