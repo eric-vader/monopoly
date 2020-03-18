@@ -1,0 +1,67 @@
+#background {
+  background: #D7BAAA;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+#magazine {
+  width: 500px;
+  background: #599495;
+  height: 600px;
+  position: relative;
+  margin: 20px;
+}
+
+#merlion {
+  width: 420px;
+  position: absolute;
+  bottom: 0;
+  left: 40px;
+}
+
+#title {
+  position: absolute;
+  font-family: Oswald;
+  width: 500px;
+}
+
+.sub-title {
+  font-size: 20px;
+  color: white;
+  cursor: pointer;
+}
+
+#main-title {
+  font-weight: 800;
+  font-size: 40px;
+  color: white;
+  background: red;
+  width: 360px;
+  padding-left: 15px;
+}
+
+#caption {
+  font-size: 15px;
+  padding-left: 15px;
+}
+
+#facts {
+  width: 160px;
+  position: absolute;
+  right: 15px;
+  bottom: -140px;
+  text-align: right;
+}
+
+#strategy {
+  width: 150px;
+  text-align: right;
+  position: absolute;
+  right: 15px;
+  bottom: -300px;
+}
+
+#link {
+  color: white;
+}

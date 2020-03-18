@@ -12,6 +12,7 @@ import {
   NbSidebarModule,
   NbToastrModule,
   NbWindowModule,
+  NbButtonModule,
 } from '@nebular/theme';
 
 @NgModule({
@@ -27,6 +28,7 @@ import {
     NbMenuModule.forRoot(),
     NbWindowModule.forRoot(),
     NbToastrModule.forRoot(),
+    NbButtonModule,
   ],
   bootstrap: [AppComponent],
   providers: [

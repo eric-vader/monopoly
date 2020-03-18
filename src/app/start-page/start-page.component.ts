@@ -11,6 +11,6 @@ export class StartPageComponent {
 
   }
   start() {
-    this.router.navigate(['charts'], { relativeTo: this.route });
+    this.router.navigate(['pages'], { relativeTo: this.route });
   }
 }
