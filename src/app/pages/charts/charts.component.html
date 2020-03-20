@@ -1,26 +1,49 @@
-<button nbButton status="primary" (click)=run()>run</button>
+<nb-card>
+  <nb-card-header>Strategy</nb-card-header>
+  <nb-card-body>
+    <div>
+      Oppoents:
+      <nb-select placeholder="Select Number of Oppoents" [(selected)]="opponent">
+        <nb-option value="1">1</nb-option>
+        <nb-option value="2">2</nb-option>
+        <nb-option value="3">3</nb-option>
+        <nb-option value="4">4</nb-option>
+        <nb-option value="5">5</nb-option>
+        <nb-option value="6">6</nb-option>
+        <nb-option value="7">7</nb-option>
+      </nb-select>
+      <!-- <input type="number" [(ngModel)]="opponent" nbInput placeholder="Opponent (1-7)"> -->
+    </div>
+    <div>
+      Rounds:
+      <input type="number" [(ngModel)]="round" nbInput placeholder="Number of Rounds (1-100)">
+    </div>
+    <button nbButton status="primary" (click)=run()>run</button>
+  </nb-card-body>
+</nb-card>
 <div class="row">
   <div class="col-lg-12">
     <nb-card>
       <nb-card-header>Assets</nb-card-header>
       <nb-card-body>
-        <ngx-d3-line [results]="assets" [xAxisLabel]="xAsset" [yAxisLabel]="yAsset"></ngx-d3-line>
+        <ngx-d3-line [results]="assets" [xAxisLabel]="xTurn" [yAxisLabel]="yAsset"></ngx-d3-line>
       </nb-card-body>
     </nb-card>
   </div>
-  <div class="col-lg-12">
+  <!-- <div class="col-lg-12">
     <nb-card>
       <nb-card-header>Net Cost (for one player)</nb-card-header>
       <nb-card-body>
-        <ngx-d3-line [results]="multi" [xAxisLabel]="xNet" [yAxisLabel]="yNet"></ngx-d3-line>
+        <ngx-d3-line [results]="multi" [xAxisLabel]="xTurn" [yAxisLabel]="yNet"></ngx-d3-line>
       </nb-card-body>
     </nb-card>
-  </div>
+  </div> -->
   <div class="col-lg-12">
     <nb-card>
       <nb-card-header>Wealth Status</nb-card-header>
       <nb-card-body>
-        <ngx-d3-line [results]="wealth" [xAxisLabel]="xNet" [yAxisLabel]="yNet"></ngx-d3-line>
+        <ngx-d3-line [results]="earnings" [xAxisLabel]="xTurn" [yAxisLabel]="yEarnings"></ngx-d3-line>
+        <ngx-d3-line [results]="expenses" [xAxisLabel]="xTurn" [yAxisLabel]="yExpenses"></ngx-d3-line>      
       </nb-card-body>
     </nb-card>
   </div>

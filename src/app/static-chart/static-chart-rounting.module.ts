@@ -1,15 +1,15 @@
 import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
-import { StartPageComponent } from './start-page.component';
+import { CircularMonopolyComponent } from './circular-monopoly/circular-monopoly.component';
 
 const routes: Routes = [{
-    path: '',
-    component: StartPageComponent
+  path: '',
+  component: CircularMonopolyComponent,
 }];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class StartPageRoutingModule {
+export class StaticMonopolyRoutingModule {
 }
