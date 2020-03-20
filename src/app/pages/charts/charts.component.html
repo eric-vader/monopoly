@@ -32,7 +32,7 @@
     <nb-card>
       <nb-card-header>Assets</nb-card-header>
       <nb-card-body>
-        <ngx-d3-line [results]="assets" [xAxisLabel]="xTurn" [yAxisLabel]="yAsset"></ngx-d3-line>
+        <ngx-d3-line [view]="view" [results]="assets" [xAxisLabel]="xTurn" [yAxisLabel]="yAsset"></ngx-d3-line>
       </nb-card-body>
     </nb-card>
   </div>
@@ -48,8 +48,15 @@
     <nb-card>
       <nb-card-header>Wealth Status</nb-card-header>
       <nb-card-body>
-        <ngx-d3-line [results]="earnings" [xAxisLabel]="xTurn" [yAxisLabel]="yEarnings"></ngx-d3-line>
-        <ngx-d3-line [results]="expenses" [xAxisLabel]="xTurn" [yAxisLabel]="yExpenses"></ngx-d3-line>      
+        <ngx-d3-line [view]="view" [results]="earnings" [xAxisLabel]="xTurn" [yAxisLabel]="yEarnings"></ngx-d3-line>    
+      </nb-card-body>
+    </nb-card>
+  </div>
+  <div class="col-lg-12">
+    <nb-card>
+      <nb-card-header>Wealth Status</nb-card-header>
+      <nb-card-body>
+        <ngx-d3-line [view]="view" [results]="expenses" [xAxisLabel]="xTurn" [yAxisLabel]="yExpenses"></ngx-d3-line>
       </nb-card-body>
     </nb-card>
   </div>

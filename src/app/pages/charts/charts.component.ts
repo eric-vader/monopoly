@@ -20,7 +20,8 @@ export class ChartsComponent {
   yAsset = 'Earnings(S$)';
   yEarnings = 'Total Earnings';
   yExpenses = 'Total Expenses';
-
+  
+  view: number[];
   assets: any;
   opponent: string;
   round: string;
@@ -34,6 +35,7 @@ export class ChartsComponent {
     this.opponent = '4';
     this.round = '34';
     this.assets = [];
+    this.view = [1400, 500];
   }
 
   ngOnInit() {
@@ -118,67 +120,4 @@ export class ChartsComponent {
     });
     return revenue;
   }
-
-  multi = [
-    {
-      name: 'Total Revenue',
-      series: [
-        {
-          name: '0',
-          value: 0,
-        },
-        {
-          name: '5',
-          value: 10,
-        },
-        {
-          name: '10',
-          value: 20,
-        },
-        {
-          name: '15',
-          value: 40,
-        },
-        {
-          name: '20',
-          value: 50,
-        },
-        {
-          name: '25',
-          value: 80,
-        },
-      ],
-    },
-    {
-      name: 'Total Cost',
-      series: [
-        {
-          name: '0',
-          value: 0,
-        },
-        {
-          name: '5',
-          value: 3,
-        },
-        {
-          name: '10',
-          value: 15,
-        },
-        {
-          name: '15',
-          value: 34,
-        },
-        {
-          name: '20',
-          value: 44,
-        },
-        {
-          name: '25',
-          value: 59,
-        },
-      ],
-    },
-  ];
-
-
 }

@@ -14,7 +14,8 @@ import { NbThemeService } from '@nebular/theme';
       [showXAxisLabel]="showXAxisLabel"
       [showYAxisLabel]="showYAxisLabel"
       [xAxisLabel]="xAxisLabel"
-      [yAxisLabel]="yAxisLabel">
+      [yAxisLabel]="yAxisLabel"
+      [view]="view">
     </ngx-charts-line-chart>
   `,
 })
@@ -22,6 +23,7 @@ export class D3LineComponent implements OnDestroy {
   @Input() results;
   @Input() xAxisLabel: String;
   @Input() yAxisLabel: String;
+  @Input() view: number[];
 
   showLegend = true;
   showXAxis = true;

@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NbMediaBreakpointsService, NbMenuService, NbSidebarService, NbThemeService } from '@nebular/theme';
 import { map, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { RouterModule, Router } from '@angular/router';
 
 @Component({
   selector: 'ngx-header',
@@ -17,7 +18,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   currentTheme = 'default';
 
   constructor(private sidebarService: NbSidebarService,
-              private menuService: NbMenuService) {
+              private menuService: NbMenuService,
+              private router: Router) {
   }
 
   ngOnInit() {
@@ -35,7 +37,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   navigateHome() {
-    this.menuService.navigateHome();
+    // this.menuService.navigateHome();
+    this.router.navigate([''])
     return false;
   }
 }
