@@ -1,13 +1,19 @@
 import { Component } from '@angular/core';
 import { ApiService } from '../../api.service';
-import AssetsJson from '../../../assets/data/assets.json';
-import { NumberCardComponent } from '@swimlane/ngx-charts';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'ngx-charts',
+  styleUrls: ['./charts.component.scss'],
   templateUrl: './charts.component.html',
 })
 export class ChartsComponent {
+  // static charts
+  name = 'Set iframe source';
+  url: string = "https://monopoly-nus.appspot.com/circular-monopoly.html";
+  urlSafe: SafeResourceUrl;
+
+  // dynamic charts
   xTurn = 'Total Number of Turns';
   yAsset = 'Earnings(S$)';
   yEarnings = 'Total Earnings';
@@ -21,10 +27,15 @@ export class ChartsComponent {
   earnings: [];
   expenses: [];
 
-  constructor(private apiService: ApiService) {
+  constructor(private apiService: ApiService,
+    public sanitizer: DomSanitizer) {
     this.opponent = '4';
     this.round = '34';
     this.assets = [];
+  }
+
+  ngOnInit() {
+    this.urlSafe = this.sanitizer.bypassSecurityTrustResourceUrl(this.url);
   }
 
   run() {

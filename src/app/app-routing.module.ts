@@ -7,11 +7,6 @@ const routes: Routes = [
     loadChildren: () => import('./pages/pages.module')
       .then(m => m.PagesModule),
   },
-  {
-    path: 'static',
-    loadChildren: () => import('./static-chart/static-chart.module')
-      .then(m => m.StaticChartModule),
-  },
   { path: '', loadChildren: () => import('./start-page/start-page.module')
       .then(m => m.StartPageModule),
     pathMatch: 'full' },
