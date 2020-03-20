@@ -11,7 +11,9 @@ export class ChartsComponent {
   // static charts
   name = 'Set iframe source';
   url: string = "https://monopoly-nus.appspot.com/circular-monopoly.html";
+  chord_url: string ="https://monopoly-nus.appspot.com/chord.html";
   urlSafe: SafeResourceUrl;
+  chordUrlSafe: SafeResourceUrl;
 
   // dynamic charts
   xTurn = 'Total Number of Turns';
@@ -36,6 +38,8 @@ export class ChartsComponent {
 
   ngOnInit() {
     this.urlSafe = this.sanitizer.bypassSecurityTrustResourceUrl(this.url);
+    this.chordUrlSafe = this.sanitizer.bypassSecurityTrustResourceUrl(this.chord_url);
+  
   }
 
   run() {
@@ -75,12 +79,19 @@ export class ChartsComponent {
   }
 
   caculateAssetsRevenue(data: any, type: string): any {
-    return data.map(d => {
-      return {
-        "name": d['ID'],
-        "series": this.createSeries(d[type], -1),
-      }
-    });
+    return data.filter(ele => {
+      var sum = 0;
+      ele[type].forEach(element => {
+        sum += element;
+      });
+      return sum != 0;
+    })
+      .map(d => {
+        return {
+          "name": d['ID'],
+          "series": this.createSeries(d[type], -1),
+        }
+      });
   }
 
   calculateRevenue(data: any, type: string): any {
