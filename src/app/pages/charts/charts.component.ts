@@ -12,8 +12,11 @@ export class ChartsComponent {
   name = 'Set iframe source';
   url: string = "https://monopoly-nus.appspot.com/circular-monopoly.html";
   chord_url: string ="https://monopoly-nus.appspot.com/chord.html";
+  square_url: string = "https://monopoly-nus.appspot.com/yk/index.html";
+
   urlSafe: SafeResourceUrl;
   chordUrlSafe: SafeResourceUrl;
+  squareUrlSafe: SafeResourceUrl;
 
   // dynamic charts
   xTurn = 'Total Number of Turns';
@@ -41,6 +44,7 @@ export class ChartsComponent {
   ngOnInit() {
     this.urlSafe = this.sanitizer.bypassSecurityTrustResourceUrl(this.url);
     this.chordUrlSafe = this.sanitizer.bypassSecurityTrustResourceUrl(this.chord_url);
+    this.squareUrlSafe = this.sanitizer.bypassSecurityTrustResourceUrl(this.square_url);
   
   }
 
