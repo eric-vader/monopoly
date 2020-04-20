@@ -1,22 +1,20 @@
+
 <nb-card>
-  <nb-card-header>Static Chart</nb-card-header>
-  <nb-card-body>
-    <iframe class="circular-monopoly" frameBorder="0" [src]="urlSafe"></iframe>
-  </nb-card-body>
-</nb-card>
-<nb-card>
-  <nb-card>
-    <nb-card-header>Static Chart</nb-card-header>
-    <nb-card-body>
-      <iframe class="circular-monopoly" frameBorder="0" [src]="squareUrlSafe"></iframe>
-    </nb-card-body>
-  </nb-card>
-  <nb-card>
   <nb-card-header>Strategy</nb-card-header>
   <nb-card-body>
     <div>
+      Player Name:
+      <input type="text" [(ngModel)]="playerName" nbInput placeholder="Enter Your Name ">
+    </div>
+    <div>
+      Select a strategy for yourself:
+      <nb-select placeholder="Select A Strategy" [(ngModel)]="ownStr">
+        <nb-option *ngFor="let str of strategy" [value]="str.id">{{str.name}}</nb-option>
+      </nb-select>
+    </div>
+    <div>
       Oppoents:
-      <nb-select placeholder="Select Number of Oppoents" [(selected)]="opponent">
+      <nb-select placeholder="Select Number of Oppoents" [(ngModel)]="opponent">
         <nb-option value="1">1</nb-option>
         <nb-option value="2">2</nb-option>
         <nb-option value="3">3</nb-option>
@@ -25,21 +23,73 @@
         <nb-option value="6">6</nb-option>
         <nb-option value="7">7</nb-option>
       </nb-select>
+      <button nbButton status="primary" (click)=set()>Set Strategy for Opponents</button>
       <!-- <input type="number" [(ngModel)]="opponent" nbInput placeholder="Opponent (1-7)"> -->
+    </div>
+    <div *ngFor="let id of ops">
+      Oppoent {{id + 1}}:
+      <nb-select  placeholder="Select A Strategy" [(selected)]=selectedStr[id]>
+        <nb-option *ngFor="let str of strategy" [value]=str.id>{{str.name}}</nb-option>
+      </nb-select>
     </div>
     <div>
       Rounds:
       <input type="number" [(ngModel)]="round" nbInput placeholder="Number of Rounds (1-100)">
     </div>
-    <button nbButton status="primary" (click)=run()>run</button>
+    <div>
+      Maximum Turns:
+      <input type="number" [(ngModel)]="max_turn" nbInput placeholder="Maximum Turns Per Round">
+    </div>
+    <div>
+      <button nbButton status="primary" (click)=simulate()>Simulate</button>
+    </div>
+    <button nbButton status="primary" (click)=run()>Run Local Data</button>
   </nb-card-body>
 </nb-card>
+
+<!-- <nb-card>
+  <nb-card-header>Static Chart</nb-card-header>
+  <nb-card-body>
+    <iframe class="circular-monopoly" frameBorder="0" [src]="urlSafe"></iframe>
+  </nb-card-body>
+</nb-card>
+<nb-card>
+  <nb-card-header>Static Chart</nb-card-header>
+  <nb-card-body>
+    <iframe class="circular-monopoly" frameBorder="0" [src]="squareUrlSafe"></iframe>
+  </nb-card-body>
+</nb-card> -->
 <div class="row">
+  <div class="col-lg-12">
+    <nb-card>
+      <nb-card-header>Money Flow</nb-card-header>
+      <nb-card-body>
+        <div class="rank-chart" id="chartdiv"></div>
+      </nb-card-body>
+    </nb-card>
+  </div>
+  <div class="col-lg-12">
+    <nb-card>
+      <nb-card-header>Ranking Heatmap</nb-card-header>
+      <nb-card-body>
+        <ngx-d3-heatmap [result]="rankHeap"></ngx-d3-heatmap>
+      </nb-card-body>
+    </nb-card>
+  </div>
+  <div class="col-lg-12">
+    <nb-card>
+      <nb-card-header>Ranking</nb-card-header>
+      <nb-card-body>
+        <!-- <div class="rank-chart" id="chartdiv"></div> -->
+        <ngx-chartjs-radar class="rank-chart" [options]="rankOp" [data]="rankData"></ngx-chartjs-radar>
+      </nb-card-body>
+    </nb-card>
+  </div>
   <div class="col-lg-12">
     <nb-card>
       <nb-card-header>Assets</nb-card-header>
       <nb-card-body>
-        <ngx-d3-line [view]="view" [results]="assets" [xAxisLabel]="xTurn" [yAxisLabel]="yAsset"></ngx-d3-line>
+        <ngx-d3-line [customCol]="assetsCol" [view]="view" [results]="assetsEarning" [xAxisLabel]="xTurn" [yAxisLabel]="yAsset"></ngx-d3-line>
       </nb-card-body>
     </nb-card>
   </div>
@@ -74,14 +124,6 @@
       </nb-card-body>
     </nb-card>
   </div> -->
-  <div class="col-lg-12">
-    <nb-card>
-      <nb-card-header>Chord Chart</nb-card-header>
-      <nb-card-body>
-        <iframe class="circular-monopoly" frameBorder="0" [src]="chordUrlSafe"></iframe>
-      </nb-card-body>
-    </nb-card>
-  </div>
   <!-- <div class="col-lg-12">
     <nb-card>
       <nb-card-header>Pie</nb-card-header>

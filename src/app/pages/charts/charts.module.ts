@@ -34,6 +34,7 @@ import { D3Component } from './d3/d3.component';
 import { EchartsComponent } from './echarts/echarts.component';
 
 import { FormsModule } from '@angular/forms'
+import { D3HeatmapComponent } from './d3/d3-heatmap.component';
 
 const components = [
   ChartjsComponent,
@@ -46,6 +47,7 @@ const components = [
   ChartjsMultipleXaxisComponent,
   ChartjsBarHorizontalComponent,
   ChartjsRadarComponent,
+  D3HeatmapComponent,
   D3BarComponent,
   D3LineComponent,
   D3PieComponent,

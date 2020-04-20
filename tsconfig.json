@@ -1,6 +1,8 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "baseUrl": ".",
+    "paths": { "*": ["types/*"] },
     "importHelpers": true,
     "module": "esnext",
     "outDir": "./dist/out-tsc",
