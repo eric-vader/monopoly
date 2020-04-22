@@ -10,7 +10,7 @@ const routes: Routes = [
   { path: '', loadChildren: () => import('./start-page/start-page.module')
       .then(m => m.StartPageModule),
     pathMatch: 'full' },
-  { path: '**', redirectTo: 'pages' },
+  { path: '**', redirectTo: '' },
 ];
 
 const config: ExtraOptions = {

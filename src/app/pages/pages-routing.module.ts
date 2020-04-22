@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { PagesComponent } from './pages.component';
 import { NotFoundComponent } from './miscellaneous/not-found/not-found.component';
 import { ChartsComponent } from './charts/charts.component';
+import { StaticchartComponent } from './staticchart/staticchart.component';
 
 const routes: Routes = [{
   path: '',
@@ -12,6 +13,10 @@ const routes: Routes = [{
     {
       path: 'charts',
       component: ChartsComponent,
+    },
+    {
+      path: 'static',
+      component: StaticchartComponent,
     },
     {
       path: 'miscellaneous',

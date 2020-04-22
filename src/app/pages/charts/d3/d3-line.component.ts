@@ -11,6 +11,7 @@ import { NbThemeService } from '@nebular/theme';
       [xAxis]="showXAxis"
       [yAxis]="showYAxis"
       [legend]="showLegend"
+      [legendTitle]="legendTitle"
       [showXAxisLabel]="showXAxisLabel"
       [showYAxisLabel]="showYAxisLabel"
       [xAxisLabel]="xAxisLabel"
@@ -27,7 +28,9 @@ export class D3LineComponent implements OnDestroy {
   @Input() view: number[];
   @Input() scheme: any;
   @Input() customCol: any;
+  @Input() legendTitle: any;
 
+  
   showLegend = true;
   showXAxis = true;
   showYAxis = true;

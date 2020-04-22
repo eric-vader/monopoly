@@ -36,10 +36,10 @@
       Rounds:
       <input type="number" [(ngModel)]="round" nbInput placeholder="Number of Rounds (1-100)">
     </div>
-    <div>
+    <!-- <div>
       Maximum Turns:
       <input type="number" [(ngModel)]="max_turn" nbInput placeholder="Maximum Turns Per Round">
-    </div>
+    </div> -->
     <div>
       <button nbButton status="primary" (click)=simulate()>Simulate</button>
     </div>
@@ -47,19 +47,8 @@
   </nb-card-body>
 </nb-card>
 
-<!-- <nb-card>
-  <nb-card-header>Static Chart</nb-card-header>
-  <nb-card-body>
-    <iframe class="circular-monopoly" frameBorder="0" [src]="urlSafe"></iframe>
-  </nb-card-body>
-</nb-card>
-<nb-card>
-  <nb-card-header>Static Chart</nb-card-header>
-  <nb-card-body>
-    <iframe class="circular-monopoly" frameBorder="0" [src]="squareUrlSafe"></iframe>
-  </nb-card-body>
-</nb-card> -->
 <div class="row">
+  
   <div class="col-lg-12">
     <nb-card>
       <nb-card-header>Money Flow</nb-card-header>
@@ -72,16 +61,18 @@
     <nb-card>
       <nb-card-header>Ranking Heatmap</nb-card-header>
       <nb-card-body>
-        <ngx-d3-heatmap [result]="rankHeap"></ngx-d3-heatmap>
+        <ngx-d3-heatmap [result]="rankHeap" [colorScheme]="rankScheme" [view]="rankHeapView" 
+        [trimXAxisTicks]="rankX"
+        [xAxisLabel]="rankHeapX" [yAxisLabel]="rankHeapY"></ngx-d3-heatmap>
       </nb-card-body>
     </nb-card>
   </div>
   <div class="col-lg-12">
-    <nb-card>
-      <nb-card-header>Ranking</nb-card-header>
+    <nb-card size="giant">
+      <nb-card-header>Assets Heatmap</nb-card-header>
       <nb-card-body>
-        <!-- <div class="rank-chart" id="chartdiv"></div> -->
-        <ngx-chartjs-radar class="rank-chart" [options]="rankOp" [data]="rankData"></ngx-chartjs-radar>
+        <ngx-d3-heatmap [result]="assetHeap" [colorScheme]="assetScheme" [view]="assetHeapView" 
+        [xAxisLabel]="assetHeapX" [yAxisLabel]="assetHeapY"></ngx-d3-heatmap>
       </nb-card-body>
     </nb-card>
   </div>
@@ -89,23 +80,18 @@
     <nb-card>
       <nb-card-header>Assets</nb-card-header>
       <nb-card-body>
-        <ngx-d3-line [customCol]="assetsCol" [view]="view" [results]="assetsEarning" [xAxisLabel]="xTurn" [yAxisLabel]="yAsset"></ngx-d3-line>
+        <ngx-d3-line [customCol]="assetsCol" [legendTitle]="assetTitle"
+        [view]="view" [results]="assetsEarning" [xAxisLabel]="xTurn" [yAxisLabel]="yAsset"></ngx-d3-line>
       </nb-card-body>
     </nb-card>
   </div>
-  <!-- <div class="col-lg-12">
-    <nb-card>
-      <nb-card-header>Net Cost (for one player)</nb-card-header>
-      <nb-card-body>
-        <ngx-d3-line [results]="multi" [xAxisLabel]="xTurn" [yAxisLabel]="yNet"></ngx-d3-line>
-      </nb-card-body>
-    </nb-card>
-  </div> -->
+
   <div class="col-lg-12">
     <nb-card>
       <nb-card-header>Wealth Status</nb-card-header>
       <nb-card-body>
-        <ngx-d3-line [view]="view" [results]="earnings" [xAxisLabel]="xTurn" [yAxisLabel]="yEarnings"></ngx-d3-line>    
+        <ngx-d3-line [view]="view" [results]="net" [legendTitle]="playerTitle" [customCol]="stratCol"
+          [xAxisLabel]="xTurn" [yAxisLabel]="yNet"></ngx-d3-line>
       </nb-card-body>
     </nb-card>
   </div>
@@ -113,47 +99,19 @@
     <nb-card>
       <nb-card-header>Wealth Status</nb-card-header>
       <nb-card-body>
-        <ngx-d3-line [view]="view" [results]="expenses" [xAxisLabel]="xTurn" [yAxisLabel]="yExpenses"></ngx-d3-line>
-      </nb-card-body>
-    </nb-card>
-  </div>
-  <!-- <div class="col-lg-12">
-    <nb-card>
-      <nb-card-header>Standar Deviation</nb-card-header>
-      <nb-card-body>
-      </nb-card-body>
-    </nb-card>
-  </div> -->
-  <!-- <div class="col-lg-12">
-    <nb-card>
-      <nb-card-header>Pie</nb-card-header>
-      <nb-card-body>
-        <ngx-d3-pie></ngx-d3-pie>
+        <ngx-d3-line [view]="view" [results]="earnings" [legendTitle]="playerTitle" [customCol]="stratCol"
+        [xAxisLabel]="xTurn" [yAxisLabel]="yEarnings"></ngx-d3-line>    
       </nb-card-body>
     </nb-card>
   </div>
   <div class="col-lg-12">
     <nb-card>
-      <nb-card-header>Bar</nb-card-header>
+      <nb-card-header>Wealth Status</nb-card-header>
       <nb-card-body>
-        <ngx-d3-bar></ngx-d3-bar>
+        <ngx-d3-line [view]="view" [results]="expenses" [legendTitle]="playerTitle" [customCol]="stratCol"
+        [xAxisLabel]="xTurn" [yAxisLabel]="yExpenses"></ngx-d3-line>
       </nb-card-body>
     </nb-card>
   </div>
-  <div class="col-lg-12">
-    <nb-card>
-      <nb-card-header>Advanced Pie</nb-card-header>
-      <nb-card-body>
-        <ngx-d3-advanced-pie></ngx-d3-advanced-pie>
-      </nb-card-body>
-    </nb-card>
-  </div>
-  <div class="col-lg-6">
-    <nb-card>
-      <nb-card-header>Area Chart</nb-card-header>
-      <nb-card-body>
-        <ngx-d3-area-stack></ngx-d3-area-stack>
-      </nb-card-body>
-    </nb-card>
-  </div> -->
+
 </div>

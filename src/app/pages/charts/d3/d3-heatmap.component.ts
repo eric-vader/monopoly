@@ -13,12 +13,22 @@ import { NbThemeService } from '@nebular/theme';
       [xAxis]="xAxis"
       [yAxis]="yAxis"
       [xAxisLabel]="xAxisLabel"
-      [yAxisLabel]="yAxisLabel">
+      [yAxisLabel]="yAxisLabel"
+      [view]="view"
+      [trimYAxisTicks]="trimYAxisTicks"
+      [trimXAxisTicks]="trimXAxisTicks">
     </ngx-charts-heat-map>
   `,
 })
 export class D3HeatmapComponent implements OnDestroy {
   @Input() result: any;
+  @Input() view: any;
+  @Input() colorScheme: any;
+  @Input() xAxisLabel: string;
+  @Input() yAxisLabel: string;
+  @Input() trimXAxisTicks: any;
+  @Input() trimYAxisTicks: any;
+
   // options
   legend: boolean = true;
   showLabels: boolean = true;
@@ -27,8 +37,7 @@ export class D3HeatmapComponent implements OnDestroy {
   yAxis: boolean = true;
   showYAxisLabel: boolean = true;
   showXAxisLabel: boolean = true;
-  xAxisLabel: string = 'Country';
-  yAxisLabel: string = 'Year';
+  
 
   // single = [
   //   {
@@ -60,7 +69,6 @@ export class D3HeatmapComponent implements OnDestroy {
   
     
   // ];
-  colorScheme: any;
   themeSubscription: any;
 
   constructor(private theme: NbThemeService) {
