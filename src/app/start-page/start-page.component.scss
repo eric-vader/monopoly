@@ -3,6 +3,8 @@
   display: flex;
   flex-direction: row;
   justify-content: center;
+  height: 100vh;
+  min-height: 600px;
 }
 
 #magazine {
@@ -10,7 +12,8 @@
   background: #599495;
   height: 600px;
   position: relative;
-  margin: 20px;
+  display: block;
+  margin: auto;
 }
 
 #merlion {

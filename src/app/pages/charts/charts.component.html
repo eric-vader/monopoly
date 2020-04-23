@@ -1,20 +1,28 @@
-
-<nb-card>
-  <nb-card-header>Strategy</nb-card-header>
-  <nb-card-body>
-    <div>
-      Player Name:
-      <input type="text" [(ngModel)]="playerName" nbInput placeholder="Enter Your Name ">
+<nb-stepper orientation="vertical">
+  <nb-step [hidden]=true label="First step">
+    <h4>Create A Name For Your Player to Start the Game!</h4>
+    <div class="margin-top">
+      <input type="text" [(ngModel)]="playerName" nbInput placeholder="Enter the Name">
     </div>
-    <div>
-      Select a strategy for yourself:
+    <button class="margin-top" nbButton nbStepperNext>next</button>
+  </nb-step>
+  <nb-step [hidden]=true label="Second step">
+    <h4>Select A Gaming Strategy For Your Player</h4>
+    <div class="margin-top">
       <nb-select placeholder="Select A Strategy" [(ngModel)]="ownStr">
         <nb-option *ngFor="let str of strategy" [value]="str.id">{{str.name}}</nb-option>
       </nb-select>
     </div>
-    <div>
-      Oppoents:
-      <nb-select placeholder="Select Number of Oppoents" [(ngModel)]="opponent">
+    <div class="margin-top">
+      <button nbButton nbStepperPrevious>prev</button>
+      <button class="margin-left" nbButton nbStepperNext>next</button>
+    </div>
+
+  </nb-step>
+  <nb-step [hidden]=true label="Third step">
+    <h4>How Many Opponents Do You Want to Play Against?</h4>
+    <div class="margin-top">
+      <nb-select placeholder="Select Number of Opponents" [(ngModel)]="opponent">
         <nb-option value="1">1</nb-option>
         <nb-option value="2">2</nb-option>
         <nb-option value="3">3</nb-option>
@@ -23,32 +31,63 @@
         <nb-option value="6">6</nb-option>
         <nb-option value="7">7</nb-option>
       </nb-select>
-      <button nbButton status="primary" (click)=set()>Set Strategy for Opponents</button>
+      Opponents
       <!-- <input type="number" [(ngModel)]="opponent" nbInput placeholder="Opponent (1-7)"> -->
     </div>
-    <div *ngFor="let id of ops">
-      Oppoent {{id + 1}}:
-      <nb-select  placeholder="Select A Strategy" [(selected)]=selectedStr[id]>
+    <div class="margin-top">
+      <button nbButton nbStepperPrevious>prev</button>
+      <button class="margin-left" nbButton nbStepperNext (click)=set()>next</button>
+    </div>
+  </nb-step>
+  
+  <nb-step [hidden]=true label="Fourth step">
+    <h4>Select Gaming Strategy for Other Opponents Also!</h4>
+    <h6 class="warning-txt" *ngIf="ops.length == 0">
+      Please Select At Leat One Opponent <button status="danger" nbButton nbStepperPrevious>prev</button>
+    </h6>
+    <div class="margin-top" *ngFor="let id of ops">
+      Opponent {{id + 1}}:
+      <nb-select placeholder="Select A Strategy" [(selected)]=selectedStr[id]>
         <nb-option *ngFor="let str of strategy" [value]=str.id>{{str.name}}</nb-option>
       </nb-select>
     </div>
-    <div>
-      Rounds:
+     <div class="margin-top">
+      <button nbButton nbStepperPrevious>prev</button>
+      <button class="margin-left" nbButton nbStepperNext>next</button>
+    </div>
+  </nb-step>
+   <nb-step [hidden]=true label="Fifth step">
+    <h4>
+      How Many Rounds Do You Want to Play?
+    </h4>
+     <div class="margin-top">
       <input type="number" [(ngModel)]="round" nbInput placeholder="Number of Rounds (1-100)">
     </div>
-    <!-- <div>
-      Maximum Turns:
-      <input type="number" [(ngModel)]="max_turn" nbInput placeholder="Maximum Turns Per Round">
-    </div> -->
-    <div>
-      <button nbButton status="primary" (click)=simulate()>Simulate</button>
+    <div class="margin-top">
+      <button nbButton nbStepperPrevious>prev</button>
+      <button nbButton class="margin-left" status="warning" (click)=simulate()>Start the Game!</button>
     </div>
-    <button nbButton status="primary" (click)=run()>Run Local Data</button>
-  </nb-card-body>
-</nb-card>
-
+    
+    <div class="margin-top">
+      <h6>Check Samples!</h6>
+      <button nbButton (click)=run(0)>Demo One Opponent</button>
+      <button class="margin-left" nbButton (click)=run(1)>Demo Two Opponents</button>
+      <button class="margin-left" nbButton (click)=run(2)>Demo Three Opponents</button>
+      <button class="margin-left" nbButton (click)=run(3)>Demo Four Opponents</button>
+    </div>
+  </nb-step>
+</nb-stepper>
 <div class="row">
-  
+  <div class="col-lg-12">
+    <nb-card>
+      <nb-card-header>Ranking Heatmap</nb-card-header>
+      <nb-card-body>
+        <ngx-d3-heatmap [result]="rankHeap" [colorScheme]="rankScheme" [view]="rankHeapView" 
+        [trimXAxisTicks]="rankX"
+        [xAxisLabel]="rankHeapX" [yAxisLabel]="rankHeapY" [legendTitle]="rankHeapTitle"></ngx-d3-heatmap>
+      </nb-card-body>
+    </nb-card>
+  </div>
   <div class="col-lg-12">
     <nb-card>
       <nb-card-header>Money Flow</nb-card-header>
@@ -58,21 +97,11 @@
     </nb-card>
   </div>
   <div class="col-lg-12">
-    <nb-card>
-      <nb-card-header>Ranking Heatmap</nb-card-header>
-      <nb-card-body>
-        <ngx-d3-heatmap [result]="rankHeap" [colorScheme]="rankScheme" [view]="rankHeapView" 
-        [trimXAxisTicks]="rankX"
-        [xAxisLabel]="rankHeapX" [yAxisLabel]="rankHeapY"></ngx-d3-heatmap>
-      </nb-card-body>
-    </nb-card>
-  </div>
-  <div class="col-lg-12">
     <nb-card size="giant">
       <nb-card-header>Assets Heatmap</nb-card-header>
       <nb-card-body>
         <ngx-d3-heatmap [result]="assetHeap" [colorScheme]="assetScheme" [view]="assetHeapView" 
-        [xAxisLabel]="assetHeapX" [yAxisLabel]="assetHeapY"></ngx-d3-heatmap>
+        [xAxisLabel]="assetHeapX" [yAxisLabel]="assetHeapY" [legendTitle]="assetHeapTitle"></ngx-d3-heatmap>
       </nb-card-body>
     </nb-card>
   </div>
@@ -115,3 +144,4 @@
   </div>
 
 </div>
+

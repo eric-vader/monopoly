@@ -16,7 +16,8 @@ import { NbThemeService } from '@nebular/theme';
       [yAxisLabel]="yAxisLabel"
       [view]="view"
       [trimYAxisTicks]="trimYAxisTicks"
-      [trimXAxisTicks]="trimXAxisTicks">
+      [trimXAxisTicks]="trimXAxisTicks"
+      [legendTitle]="legendTitle">
     </ngx-charts-heat-map>
   `,
 })
@@ -28,6 +29,7 @@ export class D3HeatmapComponent implements OnDestroy {
   @Input() yAxisLabel: string;
   @Input() trimXAxisTicks: any;
   @Input() trimYAxisTicks: any;
+  @Input() legendTitle: any;
 
   // options
   legend: boolean = true;

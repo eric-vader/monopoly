@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { NgxEchartsModule } from 'ngx-echarts';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { ChartModule } from 'angular2-chartjs';
-import { NbCardModule, NbButtonModule, NbInputModule, NbSelectModule, } from '@nebular/theme';
+import { NbCardModule, NbButtonModule, NbInputModule, NbSelectModule, NbStepperModule, } from '@nebular/theme';
 
 import { ThemeModule } from '../../@theme/theme.module';
 
@@ -33,7 +33,7 @@ import { ChartjsComponent } from './chartjs/chartjs.component';
 import { D3Component } from './d3/d3.component';
 import { EchartsComponent } from './echarts/echarts.component';
 
-import { FormsModule } from '@angular/forms'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { D3HeatmapComponent } from './d3/d3-heatmap.component';
 
 const components = [
@@ -76,6 +76,8 @@ const components = [
     NbInputModule,
     NbSelectModule,
     FormsModule,
+    NbStepperModule,
+    ReactiveFormsModule,
   ],
   declarations: [...components],
 

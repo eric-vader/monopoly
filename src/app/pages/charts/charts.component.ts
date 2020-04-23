@@ -2,9 +2,13 @@ import { Component } from '@angular/core';
 import { ApiService } from '../../api.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { NbThemeService } from '@nebular/theme';
-
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import 'rxjs/Rx';
-import strategyData from '../../../assets/data/strategy_1.json';
+import strategy_one from '../../../assets/data/strategy_1.json';
+import strategy_two from '../../../assets/data/strategy_2.json';
+import strategy_three from '../../../assets/data/strategy_3.json';
+import strategy_four from '../../../assets/data/strategy_4.json';
+
 
 import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
@@ -16,7 +20,9 @@ import am4themes_animated from "@amcharts/amcharts4/themes/animated";
   templateUrl: './charts.component.html',
 })
 export class ChartsComponent {
-
+  
+  showData: boolean;
+  strategyData: any;
   // static charts
   name = 'Set iframe source';
   url: string = "https://monopoly-nus.appspot.com/circular-monopoly.html";
@@ -27,10 +33,10 @@ export class ChartsComponent {
 
   // dynamic charts
   xTurn = 'Turns';
-  yAsset = 'Earnings(S$)';
-  yEarnings = 'Total Earnings';
-  yExpenses = 'Total Expenses';
-  yNet = 'Net Wealth';
+  yAsset = 'Total Earnings(S$)';
+  yEarnings = 'Total Earnings(S$)';
+  yExpenses = 'Total Expenses(S$)';
+  yNet = 'Net Wealth(S$)';
   
   view: number[];
   assets: any;
@@ -44,12 +50,16 @@ export class ChartsComponent {
 
   turnRatio: number;
 
+  // simulation data
+  simData: any;
+
   // Chart Data
   rankHeap: [];
   rankScheme: any;
   rankHeapView: any;
   rankHeapX: any;
   rankHeapY: any;
+  rankHeapTitle: any;
   rankX: boolean;
 
   assetHeap: [];
@@ -57,6 +67,7 @@ export class ChartsComponent {
   assetScheme: any;
   assetHeapX: any;
   assetHeapY: any;
+  assetHeapTitle: any;
   assetsEarning: [];
   earnings: [];
   expenses: [];
@@ -76,7 +87,7 @@ export class ChartsComponent {
   assetTitle: any;
   playerTitle: any;
 
-  constructor(private apiService: ApiService,
+  constructor(private apiService: ApiService, private fb: FormBuilder,
     public sanitizer: DomSanitizer, private theme: NbThemeService) {
     this.themeSubscription = this.theme.getJsTheme().subscribe(config => {
       this.rankScheme = 'aqua';
@@ -86,14 +97,15 @@ export class ChartsComponent {
     // magic here
     this.term = 80;
 
-    this.playerName = 'Eric';
-    this.opponent = '4';
-    this.round = '10';
+    this.playerName = '';
+    this.opponent = '';
+    this.round = '';
     this.assets = [];
     this.view = [1400, 500];
     this.strategy = [];
     this.ownStr = '1';
     this.selectedStr = [];
+    this.simData = [];
     this.apiService.getStrategy().subscribe(data => {
       this.strategy = data['strategies'].map(data => {
         return {
@@ -107,15 +119,18 @@ export class ChartsComponent {
     this.colorPlayer = ['#8250C4', '#5ECBC8', '#438FF', '#FF977E', '#EB5757', '#5B2071',
         '#EC5A96', '#A43B76']
     this.assetHeapView = [1500, 1000];
-    this.assetHeapY = "Asset"
+    this.assetHeapY = "Property"
     this.assetHeapX = "Turns"
     this.rankHeapX = "Strategy"
     this.rankHeapY = "Rank"
     this.rankHeapView = [1500, 600];
     this.rankX = false;
-    this.assetTitle = "Asset"
+    this.assetTitle = "Property"
     this.playerTitle = "Strategy"
- 
+    this.rankHeapTitle = "Frequency of Occurrence "
+    this.assetHeapTitle = "Earnings(S$)"
+    this.ops = [];
+    this.strategyData = [strategy_one, strategy_two, strategy_three, strategy_four];
   }
 
   ngOnInit() {
@@ -141,17 +156,17 @@ export class ChartsComponent {
         }
       })
     });
-   
   
   }
 
   set() {
     this.selectedStr = [];
-    this.ops = Array(parseInt(this.opponent)).fill(0, 0, parseInt(this.opponent)).map((x, i) => i);
+    if(this.opponent) this.ops = Array(parseInt(this.opponent)).fill(0, 0, parseInt(this.opponent)).map((x, i) => i);
+    
     console.log(this.ops)
   }
 
-  simulate() {
+  simulate(): any {
  
     var temp = this.selectedStr.map(ele => {
       return this.strategy[ele-1]['name'];
@@ -159,26 +174,23 @@ export class ChartsComponent {
 
     this.apiService.runStrategy(temp,
       this.round, this.playerName, this.strategy[parseInt(this.ownStr)- 1]['name']).subscribe((data) => {
-
-      var sJson = JSON.stringify(data);
-      var element = document.createElement('a');
-      element.setAttribute('href', "data:text/json;charset=UTF-8," + encodeURIComponent(sJson));
-      element.setAttribute('download', "primer-server-task.json");
-      element.style.display = 'none';
-      document.body.appendChild(element);
-      element.click(); // simulate click
-      document.body.removeChild(element);
-
-      this.populateCharts(data);
+      this.simData = data;
+      this.showData = true;
+      this.populateCharts(this.simData);
     });
 
   }
 
-  run() {
-    this.populateCharts(strategyData);
+  run(index: number) {
+    if(this.showData == false) {
+      this.showData = true;
+      this.run(index);
+    } else this.populateCharts(this.strategyData[index]);
   }
 
   populateCharts(data: any) {
+
+    if(!data) return;
     // Ranking
     console.log(data)
     this.stratCol = this.strategy.map(data => {
@@ -442,7 +454,7 @@ export class ChartsComponent {
   getColor(strategy: any): any {
     if(typeof strategy === "undefined") return;
     if (strategy == 'Random') return '#599495';
-    else if (strategy == 'Basic Strategy') return '#D7BAAA';
+    else if (strategy == 'Recommended Strategy') return '#D7BAAA';
     else if (strategy.startsWith('Prefer')) {
       var color = strategy.replace('Prefer ', '');
       if (color == "Light Blue") {

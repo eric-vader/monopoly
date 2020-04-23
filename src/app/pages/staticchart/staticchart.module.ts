@@ -1,12 +1,13 @@
 import { NgModule } from '@angular/core';
 
-import { NbButtonModule, NbCardModule } from '@nebular/theme';
+import { NbButtonModule, NbCardModule, NbTabsetModule, } from '@nebular/theme';
 import { StaticchartComponent } from './staticchart.component';
 
 @NgModule({
   imports: [
     NbButtonModule,
     NbCardModule,
+    NbTabsetModule,
   ],
   declarations: [
     StaticchartComponent

@@ -1,8 +1,13 @@
 <div class="header-container">
   <div class="logo-container">
-    <!-- <a (click)="toggleSidebar()" href="#" class="sidebar-toggle">
-      <nb-icon icon="menu-2-outline"></nb-icon>
-    </a> -->
-    <a class="logo" href="#" (click)="navigateHome()">CS5346 Monopoly</a>
+    <a class="logo" href="#" (click)="navigateHome()">CS5346 MONOPOLY</a>
+  </div>
+  <div>
+    <nb-actions size="medium">
+      <nb-action icon="checkmark-circle-outline" link="/pages/static" title="View Recommended Strategy">
+      </nb-action>
+        <nb-action icon="color-palette-outline" link="/pages/charts" title="Game Simulation"></nb-action>
+      <nb-action icon="home-outline" link="/" title="Back to Homepage"></nb-action>
+    </nb-actions>
   </div>
 </div>
