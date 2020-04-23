@@ -17,13 +17,8 @@
     height: auto;
     display: flex;
     align-content: center;
-    color: white;
   }
 
-  nb-icon {
-    color: white;
-  }
-  
   nb-user {
     cursor: pointer;
   }
@@ -48,7 +43,6 @@
     }
 
     .logo {
-      font-family: Oswald;
       padding: 0 1.25rem;
       font-size: 1.5rem;
       @include nb-ltr(border-left, 1px solid nb-theme(divider-color));
