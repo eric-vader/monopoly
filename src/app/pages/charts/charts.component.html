@@ -98,7 +98,7 @@
   </div>
   <div class="col-lg-12">
     <nb-card size="giant">
-      <nb-card-header>Assets Heatmap</nb-card-header>
+      <nb-card-header>Property Heatmap</nb-card-header>
       <nb-card-body>
         <ngx-d3-heatmap [result]="assetHeap" [colorScheme]="assetScheme" [view]="assetHeapView" 
         [xAxisLabel]="assetHeapX" [yAxisLabel]="assetHeapY" [legendTitle]="assetHeapTitle"></ngx-d3-heatmap>
@@ -107,7 +107,7 @@
   </div>
   <div class="col-lg-12">
     <nb-card>
-      <nb-card-header>Assets</nb-card-header>
+      <nb-card-header>Property Earnings</nb-card-header>
       <nb-card-body>
         <ngx-d3-line [customCol]="assetsCol" [legendTitle]="assetTitle"
         [view]="view" [results]="assetsEarning" [xAxisLabel]="xTurn" [yAxisLabel]="yAsset"></ngx-d3-line>
